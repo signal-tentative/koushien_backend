@@ -1,5 +1,5 @@
 package com.example.koushien_backend.service
-
+import software.amazon.awssdk.services.s3.model.ObjectCannedACL
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
@@ -19,13 +19,17 @@ class S3Service(private val s3Client: S3Client) {
     private lateinit var region: String
 
     fun uploadFile(file: MultipartFile): String {
+        val originalName = file.originalFilename ?: "file.pdf"
+        val extension = originalName.substring(originalName.lastIndexOf("."))
+        val fileKey = "materials/${UUID.randomUUID()}$extension"
+
         // ファイル名は取り出す時にやりやすいやつに
-        val fileKey = "materials/${file.originalFilename}"
 
         val putObjectRequest = PutObjectRequest.builder()
             .bucket(bucketName)
             .key(fileKey)
             .contentType(file.contentType)
+            .acl(ObjectCannedACL.PUBLIC_READ)
             .build()
 
         // アップロード
@@ -33,8 +37,7 @@ class S3Service(private val s3Client: S3Client) {
             putObjectRequest,
             RequestBody.fromInputStream(file.inputStream, file.size)
         )
-
         // 公開URL
-        return "https://$bucketName.s3.$://amazonaws.com"
+        return "https://$bucketName.s3.$://amazonaws.com/$fileKey"
     }
 }

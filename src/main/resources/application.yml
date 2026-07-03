@@ -1,6 +1,0 @@
-aws:
-  s3:
-    bucket: "バケット名"
-    region: "ap-northeast-1仮の東京"
-    access-key: ${AWS_ACCESS_KEY_ID}
-    secret-key: ${AWS_SECRET_ACCESS_KEY}

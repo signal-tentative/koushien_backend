@@ -6,7 +6,9 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.multipart.MultipartFile
 import com.example.koushien_backend.repository.LectureRepository
+import com.example.koushien_backend.service.LectureService
 import com.example.koushien_backend.service.S3Service
+import org.springframework.web.bind.annotation.GetMapping
 
 //講義関係
 data class RequestLecture(val lectureName:String,val lectureVoice:String,val materialsUrl: String);
@@ -14,14 +16,15 @@ data class RequestLecture(val lectureName:String,val lectureVoice:String,val mat
 @RestController
 class LectureController(
     private val s3Service: S3Service,
-    private val lectureRepository: LectureRepository
+    private val lectureRepository: LectureRepository,
+    private val lectureService: LectureService
 ) {
     //レクチャーを登録する
-    @PostMapping
+    @PostMapping("/lectures")
     fun createLecture(
         @RequestParam("lectureName") lectureName: String,
         @RequestParam("lectureVoice") lectureVoice: String,
-        @RequestParam("file") file: MultipartFile // フロントから届くPDFファイル
+        @RequestParam("file") file: MultipartFile
     ): ResponseEntity<Lecture> {
 
         // S3にファイルをアップロードし、URLを取得
@@ -38,5 +41,9 @@ class LectureController(
         val savedLecture = lectureRepository.save(lecture)
 
         return ResponseEntity.ok(savedLecture)
+    }
+    @GetMapping("/lectures")
+    fun getLectures(): List<Lecture?>{
+        return lectureService.getLecture()
     }
 }
