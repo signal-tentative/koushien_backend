@@ -1,6 +1,11 @@
 aws:
   s3:
-    bucket: "バケット名"
-    region: "ap-northeast-1仮の東京"
-    access-key: ${AWS_ACCESS_KEY_ID}
-    secret-key: ${AWS_SECRET_ACCESS_KEY}
+    bucket: "koushienaws3"
+    region: "us-east-1"
+    access-key: "AKIATWO7KDQU6WC46OLU"
+    secret-key: "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"
+
+firebase:
+  config-path: "classpath:koushien-d407a-firebase-adminsdk-fbsvc-661875c004.json"
+
+

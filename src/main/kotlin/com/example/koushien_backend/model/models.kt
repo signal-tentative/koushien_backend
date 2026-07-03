@@ -12,14 +12,13 @@ import java.io.File
 @Table(name="users")
 data class User(
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long = 0L,
+    var uid: String = "",
     var name: String = "",
     var email: String = "",
     var permission: Boolean = false,
     var createdAt: LocalDateTime = LocalDateTime.now(),
     @ManyToOne
-    @JoinColumn(name="lecture_id", nullable = false)
+    @JoinColumn(name="lecture_id", nullable = true)
     var lecture: Lecture?=null
 )
 @Entity
@@ -55,7 +54,7 @@ data class Qta(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long = 0L,
-    var studentId: Long = 0L,
+    var studentId: String = "",
     var lectureId: Long = 0L,
     var instructorId: Long = 0L,
     var timestamp: LocalDateTime = LocalDateTime.now(),

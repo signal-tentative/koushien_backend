@@ -12,13 +12,14 @@ class Defaultdata(val userRepository: UserRepository,val lectureRepository: Lect
     override fun run(vararg args: String) {
 
         val lecture1 = Lecture(
-            lecture_name = "Lecture 1",
-            lecture_voice = "test",
-            Materials = "test",
+            lectureName = "Lecture 1",
+            lectureVoice = "test",
+            materialsUrl = "test",
             createdAt = LocalDateTime.now(),
         )
 val testLecture= lectureRepository.save(lecture1)
         val newUser = User(
+            uid="dummy",
             name = "testUser1",
             email="sample@jp",
             permission = true,

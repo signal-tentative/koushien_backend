@@ -34,6 +34,7 @@ dependencies {
 	runtimeOnly("com.h2database:h2")
 	implementation(kotlin("stdlib"))
 	implementation("software.amazon.awssdk:s3:2.25.0")
+	implementation("com.google.firebase:firebase-admin:9.4.1")
 }
 
 kotlin {
