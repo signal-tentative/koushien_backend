@@ -33,6 +33,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-h2console")
 	runtimeOnly("com.h2database:h2")
 	implementation(kotlin("stdlib"))
+	implementation("software.amazon.awssdk:s3:2.25.0")
 }
 
 kotlin {

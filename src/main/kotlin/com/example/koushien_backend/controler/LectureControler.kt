@@ -1,38 +1,42 @@
 package com.example.koushien_backend.controler
 import com.example.koushien_backend.model.Lecture
-import org.springframework.web.bind.annotation.DeleteMapping
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.PutMapping
-import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
-import com.example.koushien_backend.model.User
-import com.example.koushien_backend.service.LectureService
-data class RequestLecture(val lecture_name:String,val Lecture_voice:String,val Materials: String);
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.multipart.MultipartFile
+import com.example.koushien_backend.repository.LectureRepository
+import com.example.koushien_backend.service.S3Service
+
+//講義関係
+data class RequestLecture(val lectureName:String,val lectureVoice:String,val materialsUrl: String);
 
 @RestController
 class LectureController(
-    val lectureService: LectureService,
-){
-    @GetMapping("/lectures")
-    fun getUsers():List<Lecture?> {
-        return lectureService.getLecture()
+    private val s3Service: S3Service,
+    private val lectureRepository: LectureRepository
+) {
+    //レクチャーを登録する
+    @PostMapping
+    fun createLecture(
+        @RequestParam("lectureName") lectureName: String,
+        @RequestParam("lectureVoice") lectureVoice: String,
+        @RequestParam("file") file: MultipartFile // フロントから届くPDFファイル
+    ): ResponseEntity<Lecture> {
+
+        // S3にファイルをアップロードし、URLを取得
+        val materialsUrl = s3Service.uploadFile(file)
+
+        // DBに保存する形にする
+        val lecture = Lecture(
+            lectureName = lectureName,
+            lectureVoice = lectureVoice,
+            materialsUrl = materialsUrl // S3のURL
+        )
+
+        // データベースに保存
+        val savedLecture = lectureRepository.save(lecture)
+
+        return ResponseEntity.ok(savedLecture)
     }
-    //    @PutMapping("/users/{id}")
-//    fun updateUser(@PathVariable id:Long,@RequestBody request: RequestUser):User{
-//        return userService.updateUser(id,request)
-//    }
-//    @PostMapping("/users")
-//    fun createUser(@RequestBody request:RequestUser):User{
-//        return userService.createUser(request);
-//    }
-//    @GetMapping("/users/{id}")
-//    fun getUserById(@PathVariable id:Long):User{
-//        return userService.getUser(id)
-//    }
-//    @DeleteMapping("/users/{id}")
-//    fun deleteUserById(@PathVariable id:Long):User{
-//        return userService.deleteUser(id)
-//    }
 }
