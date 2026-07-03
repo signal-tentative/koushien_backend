@@ -19,7 +19,8 @@ class SqlUserService(val userRepository: UserRepository) : UserService {
         val updatedUser = userRepository.findByIdOrNull(id) ?: throw IllegalArgumentException("User with id $id does not exist")
         val newUser = updatedUser.copy(
             name=request.name,
-            email=request.email
+            email=request.email,
+            permission = request.permission,
         )
         return userRepository.save(newUser)
     }

@@ -1,9 +1,6 @@
 package com.example.koushien_backend.service
 import  com.example.koushien_backend.model.Lecture
-import com.example.koushien_backend.controler.RequestLecture
 import com.example.koushien_backend.repository.LectureRepository
-//import com.example.koushien_backend.repository.listOrders
-import  com.example.koushien_backend.service.LectureService
 import org.springframework.stereotype.Service
 
 @Service
@@ -11,24 +8,6 @@ class SqlLectureService ( val lectureRepository: LectureRepository): LectureServ
     override  fun getLecture(): List<Lecture?> {
         return lectureRepository.findAll()
     }
-
-    override fun getAll(): List<Lecture> {
-        TODO("Not yet implemented")
-    }
-
-    override fun createdOrder(request: RequestLecture): Lecture {
-        TODO("Not yet implemented")
-    }
-
-    override fun deleteOrder(id: Long): Lecture {
-        TODO("Not yet implemented")
-    }
-
-    override fun updateOrder(
-        id: Long,
-        request: RequestLecture
-    ): Lecture {
-        TODO("Not yet implemented")
     }
 //    override  fun getAll(): List<Order> {
 //        return orderRepository.findAll()
@@ -49,4 +28,3 @@ class SqlLectureService ( val lectureRepository: LectureRepository): LectureServ
 //        val newOrder = Order(id=id,name=request.name, price = request.price)
 //        return orderRepository.save(newOrder)
 //    }
-}

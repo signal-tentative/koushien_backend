@@ -18,20 +18,22 @@ class UserController(
     fun getUsers():List<User>{
         return userService.getUsers();
     }
-//    @PutMapping("/users/{id}")
-//    fun updateUser(@PathVariable id:Long,@RequestBody request: RequestUser):User{
-//        return userService.updateUser(id,request)
-//    }
+
     @PostMapping("/users")
     fun createUser(@RequestBody request:RequestUser):User{
         return userService.createUser(request);
     }
-//    @GetMapping("/users/{id}")
-//    fun getUserById(@PathVariable id:Long):User{
-//        return userService.getUser(id)
-//    }
-//    @DeleteMapping("/users/{id}")
-//    fun deleteUserById(@PathVariable id:Long):User{
-//        return userService.deleteUser(id)
-//    }
+    @PutMapping("/users/{id}")
+    fun updateUser(@PathVariable id:Long,@RequestBody request: RequestUser):User{
+        return userService.updateUser(id,request)
+    }
+
+    @GetMapping("/users/{id}")
+    fun getUserById(@PathVariable id:Long):User{
+        return userService.getUser(id)
+    }
+    @DeleteMapping("/users/{id}")
+    fun deleteUserById(@PathVariable id:Long):User{
+        return userService.deleteUser(id)
+    }
 }
