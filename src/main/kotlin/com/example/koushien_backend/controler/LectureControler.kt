@@ -8,10 +8,14 @@ import org.springframework.web.multipart.MultipartFile
 import com.example.koushien_backend.repository.LectureRepository
 import com.example.koushien_backend.service.LectureService
 import com.example.koushien_backend.service.S3Service
+import org.apache.coyote.Request
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PutMapping
+import org.springframework.web.bind.annotation.RequestBody
 
 //講義関係
-data class RequestLecture(val lectureName:String,val lectureVoice:String,val materialsUrl: String);
+data class RequestLecture(val lectureName:String,val lectureVoice:String,val materialsUrl: String,val beforeAfter:String);
 
 @RestController
 class LectureController(
@@ -34,6 +38,7 @@ class LectureController(
         val lecture = Lecture(
             lectureName = lectureName,
             lectureVoice = lectureVoice,
+            beforeAfter = "before",
             materialsUrl = materialsUrl // S3のURL
         )
 
@@ -42,8 +47,18 @@ class LectureController(
 
         return ResponseEntity.ok(savedLecture)
     }
+
+    @PutMapping("/lectures/{lectureId}")
+    fun updateLecture(@PathVariable lectureId: Long,@RequestBody request: RequestLecture): Lecture? {
+        return lectureService.updateLecture(lectureId,request)
+    }
+
     @GetMapping("/lectures")
     fun getLectures(): List<Lecture?>{
-        return lectureService.getLecture()
+        return lectureService.getLectures()
+    }
+    @GetMapping("/lectures/{lectureId}")
+    fun getLecture(@PathVariable lectureId: Long): Lecture? {
+        return lectureService.getLectureById(lectureId)
     }
 }

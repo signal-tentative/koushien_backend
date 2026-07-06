@@ -17,7 +17,7 @@ fun main(args: Array<String>) {
 			val resource = ClassPathResource(jsonName)
 
 			if (!resource.exists()) {
-				error("❌ 致命的エラー: src/main/resources の中に $jsonName が見つかりません！")
+				error("  $jsonName が見つかりません！")
 			}
 
 			val options = FirebaseOptions.builder()
@@ -25,10 +25,10 @@ fun main(args: Array<String>) {
 				.build()
 
 			FirebaseApp.initializeApp(options)
-			println("✨✨ [大成功] Firebase Admin SDK が正常に初期化されました！ ✨✨")
+			println("初期化されました")
 		}
 	} catch (e: Exception) {
-		println("❌ Firebaseの初期化中にエラーが発生しました:")
+		println("初期化中にエラーが発生しました:")
 		e.printStackTrace()
 	}
 	runApplication<KoushienBackendApplication>(*args)
