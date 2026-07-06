@@ -28,18 +28,21 @@ class UserController(
         if (!authorizationHeader.startsWith("Bearer ")) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(mapOf("error" to "無効なトークン形式です"))
         }
+        println(request)
         val token = request.uid
         return try {
 
             val uid = token
             val email = request.email
             val name =request.name
+            val permission = request.permission
 
             ResponseEntity.ok(mapOf(
                 "message" to "認証成功",
                 "uid" to uid,
                 "email" to email,
                 "name" to name,
+                "permission" to permission,
             ))
         } catch (e: FirebaseAuthException) {
             ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(mapOf("error" to "トークンの検証に失敗しました: ${e.message}"))
@@ -51,7 +54,7 @@ class UserController(
         @RequestBody request: RequestUser,
     ): ResponseEntity<Any> {
 
-        // 1. トークンの取り出し
+        //  トークンの取り出し
         val token = if (authorizationHeader.startsWith("Bearer ")) {
             authorizationHeader.substring(7)
         } else {

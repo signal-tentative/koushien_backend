@@ -18,7 +18,7 @@ data class User(
     var permission: Boolean = false,
     var createdAt: LocalDateTime = LocalDateTime.now(),
     @ManyToOne
-    @JoinColumn(name="lecture_id", nullable = true)
+    @JoinColumn(name="lecture_id", nullable = false)
     var lecture: Lecture?=null
 )
 @Entity
@@ -30,6 +30,7 @@ data class Lecture(
     var lectureName: String = "",
     var materialsUrl: String = "",
     var lectureVoice:String="",
+    var beforeAfter:String ="before" ,
     var createdAt: LocalDateTime = LocalDateTime.now()
 )
 
@@ -39,7 +40,7 @@ data class DontKnow(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long = 0L,
-    var dontKnowText:String = "",
+    var dontKnowCount: Long = 0L,
     var timestamp: LocalDateTime = LocalDateTime.now(),
     @ManyToOne
     @JoinColumn(name="user_id", nullable = false)

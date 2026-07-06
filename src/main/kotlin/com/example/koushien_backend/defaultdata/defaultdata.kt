@@ -15,6 +15,7 @@ class Defaultdata(val userRepository: UserRepository,val lectureRepository: Lect
             lectureName = "Lecture 1",
             lectureVoice = "test",
             materialsUrl = "test",
+            beforeAfter = "before",
             createdAt = LocalDateTime.now(),
         )
 val testLecture= lectureRepository.save(lecture1)
@@ -23,7 +24,6 @@ val testLecture= lectureRepository.save(lecture1)
             name = "testUser1",
             email="sample@jp",
             permission = true,
-            lecture =testLecture
         )
         userRepository.save(newUser)
 
