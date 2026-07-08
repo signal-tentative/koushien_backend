@@ -17,13 +17,8 @@ class SqlLectureService ( val lectureRepository: LectureRepository): LectureServ
     }
 
     override  fun updateLecture(lectureId: Long,request: RequestLecture): Lecture? {
-        var findLecture: Lecture? = lectureRepository.findByIdOrNull(lectureId)?: throw IllegalArgumentException("User with id ${lectureId} does not exist")
-        var newLecture: Lecture? = findLecture?.copy(
-           lectureName= request.lectureName,
-           lectureVoice=request.lectureVoice,
-           beforeAfter = request.beforeAfter,
-       )
-        return lectureRepository.save(newLecture)
+        var findLecture= lectureRepository.findByIdOrNull(lectureId)?: throw IllegalArgumentException("User with id ${lectureId} does not exist")
+        return lectureRepository.save(findLecture)
     }
     }
 //    override  fun getAll(): List<Order> {

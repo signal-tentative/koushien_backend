@@ -35,6 +35,7 @@ dependencies {
 	implementation(kotlin("stdlib"))
 	implementation("software.amazon.awssdk:s3:2.25.0")
 	implementation("com.google.firebase:firebase-admin:9.4.1")
+	runtimeOnly("org.postgresql:postgresql")
 }
 
 kotlin {

@@ -5,4 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface LectureRepository: JpaRepository<Lecture,Long>
+interface LectureRepository: JpaRepository<Lecture,Long>{
+    fun findLectureByCode(code:String): Lecture?
+    fun findLectureByUserUid(uid: String): List<Lecture?>
+    fun deleteLectureByCode(code: String)
+}
