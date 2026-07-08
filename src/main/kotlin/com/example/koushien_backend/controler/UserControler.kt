@@ -14,7 +14,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import com.example.koushien_backend.repository.UserRepository
-data class RequestUser(val uid: String,val name:String, val email:String, val permission:Boolean);
+data class RequestUser(val uid: String,val name:String);
 
 @RestController
 class UserController(
@@ -33,16 +33,12 @@ class UserController(
         return try {
 
             val uid = token
-            val email = request.email
             val name =request.name
-            val permission = request.permission
 
             ResponseEntity.ok(mapOf(
                 "message" to "認証成功",
                 "uid" to uid,
-                "email" to email,
                 "name" to name,
-                "permission" to permission,
             ))
         } catch (e: FirebaseAuthException) {
             ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(mapOf("error" to "トークンの検証に失敗しました: ${e.message}"))
@@ -70,8 +66,7 @@ class UserController(
 
             val newUser = User(
                 uid = uid,
-                email = request.email,
-                name = request.name ?: ""
+                name = request.name,
             )
             userRepository.save(newUser)
 
@@ -96,12 +91,12 @@ class UserController(
         return userService.updateUser(id,request)
     }
 
-    @GetMapping("/users/{id}")
-    fun getUserById(@PathVariable id:Long):User{
-        return userService.getUser(id)
+    @GetMapping("/users/{uid}")
+    fun getUserById(@PathVariable uid:String):User?{
+        return userRepository.findByUid(uid)
     }
     @DeleteMapping("/users/{id}")
-    fun deleteUserById(@PathVariable id:Long):User{
+    fun deleteUserById(@PathVariable id:Long):User?{
         return userService.deleteUser(id)
     }
 }

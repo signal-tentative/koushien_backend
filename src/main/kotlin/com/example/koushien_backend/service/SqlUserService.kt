@@ -7,20 +7,18 @@ import org.springframework.data.repository.findByIdOrNull
 
 @Service
 class SqlUserService(val userRepository: UserRepository) : UserService {
+
+    //個別ユーザー取得はRepositoryに記述のfindByUid関数で実装
+
     override fun getUsers():List<User>{
         return userRepository.findAll()
-    }
-
-    override fun getUser(id: Long): User {
-        return userRepository.findByIdOrNull(id) ?: throw IllegalArgumentException("User with id $id does not exist")
     }
 
     override fun updateUser(id: Long,request: RequestUser): User {
         val updatedUser = userRepository.findByIdOrNull(id) ?: throw IllegalArgumentException("User with id $id does not exist")
         val newUser = updatedUser.copy(
+            uid=request.uid,
             name=request.name,
-            email=request.email,
-            permission = request.permission,
         )
         return userRepository.save(newUser)
     }
@@ -31,7 +29,7 @@ class SqlUserService(val userRepository: UserRepository) : UserService {
     }
 
     override fun createUser(request: RequestUser): User {
-        val newUser = User(name = request.name,email=request.email,permission=request.permission)
+        val newUser = User(uid=request.uid,name = request.name)
         return userRepository.save(newUser)
     }
 }

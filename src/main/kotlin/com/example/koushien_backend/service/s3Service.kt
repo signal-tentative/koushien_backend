@@ -38,6 +38,6 @@ class S3Service(private val s3Client: S3Client) {
             RequestBody.fromInputStream(file.inputStream, file.size)
         )
         // 公開URL
-        return "https://$bucketName.s3.$://amazonaws.com/$fileKey"
+        return "https://$bucketName.s3.us-east-1.amazonaws.com/$fileKey"
     }
 }

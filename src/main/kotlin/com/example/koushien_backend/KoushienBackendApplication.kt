@@ -1,4 +1,4 @@
-package com.example.koushien_backend // 💡ご自身のパッケージ名
+package com.example.koushien_backend
 
 import com.google.auth.oauth2.GoogleCredentials
 import com.google.firebase.FirebaseApp
