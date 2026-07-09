@@ -102,13 +102,14 @@ data class Insight(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0L,
-    val time: LocalDateTime,
-    var rate: Double = 0.0,
-    var check:Boolean = false,
-    var insight : String = "",
+    val time: LocalDateTime,//経過時間管理
+    var rate: Double = 0.0, //分からない率
+    @Column(name = "checked", nullable = true)
+    var checked:Boolean = false,//rateをチェックする
+    var insight : String = "",//transcriptをAIに渡した返り値を保存
     @ManyToOne
     @JoinColumn(name = "lecture_id", nullable = false)
-    var lecture: Lecture? = null,
+    var lecture: Lecture? = null,//監視中のレクチャー
 )
 
 @Entity

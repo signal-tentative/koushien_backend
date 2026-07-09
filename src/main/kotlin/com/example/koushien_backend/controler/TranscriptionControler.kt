@@ -26,9 +26,7 @@ class TranscriptionControler(val transcriptionService: TranscriptService,val lec
         @RequestParam("time") time: LocalDateTime,
     ): ResponseEntity<Transcript> {
         val savedLecture = lectureRepository.findByIdOrNull(lecture_id)?: return ResponseEntity.badRequest().body(Transcript())
-        println("1")
         val savedDocument = documentRepository.findByIdOrNull(document_id)?: return ResponseEntity.badRequest().body(Transcript())
-        println("2")
         val saveTranscript = Transcript(
             page = page,
             transcript = transcript,

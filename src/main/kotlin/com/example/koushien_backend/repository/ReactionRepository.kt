@@ -5,4 +5,6 @@ import org.springframework.stereotype.Repository
 import com.example.koushien_backend.model.Reaction
 
 @Repository
-interface ReactionRepository: JpaRepository<Reaction,Long>
+interface ReactionRepository: JpaRepository<Reaction,Long>{
+    fun findAllById(id: Long): kotlin.collections.List<com.example.koushien_backend.model.Reaction?>
+}

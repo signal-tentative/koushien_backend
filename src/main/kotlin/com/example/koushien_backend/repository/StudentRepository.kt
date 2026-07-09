@@ -6,4 +6,5 @@ import com.example.koushien_backend.model.Student
 @Repository
 interface StudentRepository : JpaRepository<Student, Long>{
     fun findByUserUid(uid: String): List<Student?>
+    fun findAllById(id: Long): kotlin.collections.List<com.example.koushien_backend.model.Student?>
 }

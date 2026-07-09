@@ -4,8 +4,12 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
 import software.amazon.awssdk.core.sync.RequestBody
+import software.amazon.awssdk.core.sync.ResponseTransformer
 import software.amazon.awssdk.services.s3.S3Client
+import software.amazon.awssdk.services.s3.model.GetObjectRequest
 import software.amazon.awssdk.services.s3.model.PutObjectRequest
+import java.io.File
+import java.nio.file.Files
 import java.util.*
 
 //アップロード処理本体(仮)
@@ -39,5 +43,28 @@ class S3Service(private val s3Client: S3Client) {
         )
         // 公開URL
         return "https://$bucketName.s3.us-east-1.amazonaws.com/$fileKey"
+    }
+}
+@Service
+class AwsS3Service(private val s3Client: S3Client) {
+    @Value("\${aws.s3.bucket}")
+    private lateinit var bucketName: String
+
+    @Value("\${aws.s3.region}")
+    private lateinit var region: String
+
+    fun downloadImageToLocalFile(key:String): File {
+        val tempFile: File = Files.createTempFile("s3-image-", ".tmp").toFile()
+
+        val request = GetObjectRequest.builder()
+            .bucket(bucketName)
+            .key(key)
+            .build()
+
+        // 3. ファイルへのダウンロード実行
+        s3Client.getObject(request, ResponseTransformer.toFile(tempFile))
+
+        // 4. ファイル変数として返却
+        return tempFile
     }
 }
