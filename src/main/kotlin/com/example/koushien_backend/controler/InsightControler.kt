@@ -74,9 +74,9 @@ class  InsightControler(
         val studentCount = savedStudent.size.toDouble()
         val ratekun: Double = reactionCount / studentCount
 //transcriptから今のページのimgを取ってくるアル
-        if (rate > 30.0) {
+        if (ratekun > 30.0) {
             val savedTranscript: List<Transcript?> =
-                transcriptRepository.findByTimeTrump(lecture_id, LocalDateTime.now().minusSeconds(20))
+                transcriptRepository.findByTimeTrump(lecture_id, time)
             val imgTranscript =
                 transcriptRepository.findByIdOrNull(lecture_id) ?: return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .build()
@@ -97,13 +97,18 @@ class  InsightControler(
             }
             val fileBytes = outputFile.readBytes()
             val file64 = Base64.getEncoder().encodeToString(fileBytes)
-            val chainText = savedTranscript.joinToString("")
+            println(111111)
+            println(savedTranscript)
+            val chainText = savedTranscript.map { it?.transcript ?: "textなし" }.joinToString("")
+//            val chainText = "どんな画像ですか？"
+            println(chainText)
             suspend fun getAnswer(text: String, img: String): String {
                 val getAnswer = service.chat(text, img)
                 return getAnswer
             }
 
             val answer=  getAnswer(chainText, file64)
+            println(answer)
             val newInsight = Insight(
                 time = time,
                 insight = answer,

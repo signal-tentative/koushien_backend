@@ -53,18 +53,23 @@ class AwsS3Service(private val s3Client: S3Client) {
     @Value("\${aws.s3.region}")
     private lateinit var region: String
 
-    fun downloadImageToLocalFile(key:String): File {
-        val tempFile: File = Files.createTempFile("s3-image-", ".tmp").toFile()
+    fun downloadImageToLocalFile(key: String): File {
+        // 1. 重複しない安全な一時ファイルのパスを生成（この時点で空ファイルが作られる）
+        val tempPath = Files.createTempFile("s3-image-", ".tmp")
+
+        // 2. AWS SDKが新しくファイルを作れるように、一度空ファイルを削除する
+        Files.deleteIfExists(tempPath)
 
         val request = GetObjectRequest.builder()
             .bucket(bucketName)
             .key(key)
             .build()
 
-        // 3. ファイルへのダウンロード実行
-        s3Client.getObject(request, ResponseTransformer.toFile(tempFile))
+        // 3. ファイルへのダウンロード実行（SDKが安全にファイルを新規作成します）
+        s3Client.getObject(request, ResponseTransformer.toFile(tempPath))
 
-        // 4. ファイル変数として返却
-        return tempFile
+        // 4. Fileオブジェクトとして返却
+        return tempPath.toFile()
     }
+
 }
