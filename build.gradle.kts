@@ -36,6 +36,10 @@ dependencies {
 	implementation("software.amazon.awssdk:s3:2.25.0")
 	implementation("com.google.firebase:firebase-admin:9.4.1")
 	runtimeOnly("org.postgresql:postgresql")
+	implementation("aws.sdk.kotlin:bedrockruntime:1.3.89")
+	implementation("org.reactivestreams:reactive-streams:1.0.4")
+	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
+	implementation("org.apache.pdfbox:pdfbox:3.0.3")
 }
 
 kotlin {
