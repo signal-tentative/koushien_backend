@@ -106,7 +106,7 @@ class LectureController(
     fun getLecture(@PathVariable lectureId: Long): Lecture? {
         return lectureService.getLectureById(lectureId)
     }
-    @GetMapping("lectures/uid/{uid}")
+    @GetMapping("/lectures/uid/{uid}")
     fun getLectureByUid(@PathVariable uid: String): List<Lecture?> {
         return  lectureRepository.findLectureByUserUid(uid)
     }
