@@ -48,4 +48,8 @@ class DocumentController(
         val savedDocument = documentRepository.save(document)
         return ResponseEntity.ok(savedDocument)
     }
+    @GetMapping("/documents/{lecture_id}")
+    fun getDocumentById(@PathVariable("lecture_id") lecture_id: Long): Document? {
+        return documentRepository.findByIdOrNull(lecture_id)
+    }
 }
