@@ -75,9 +75,12 @@ class  InsightControler(
 //        val ratekun: Double = reactionCount / studentCount
         val ratekun: Double = reactionCount / studentCount
 //transcriptから今のページのimgを取ってくるアル
-        if (ratekun > 30.0) {
+        if (ratekun > 0.0) {
+            println(lecture_id)
+            println(time)
             val savedTranscript: List<Transcript?> =
                 transcriptRepository.findByTimeTrump(lecture_id, time)
+            println(savedTranscript)
             val imgTranscript =
                 transcriptRepository.findByIdOrNull(lecture_id) ?: return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .build()
@@ -91,7 +94,7 @@ class  InsightControler(
                 val renderer = PDFRenderer(document)
 
                 // 0ページ目をDPI 300のRGB画像として描画する
-                val image = renderer.renderImageWithDPI(imgTranscript.page, 300f, ImageType.RGB)
+                val image = savedTranscript[0]?.let { renderer.renderImageWithDPI(it.page, 300f, ImageType.RGB) }
 
                 // ファイルにJPEGとして出力する
                 ImageIO.write(image, "jpg", outputFile)
@@ -100,6 +103,7 @@ class  InsightControler(
             val file64 = Base64.getEncoder().encodeToString(fileBytes)
             println(111111)
             println(savedTranscript)
+            println(imgTranscript.page)
             val chainText = savedTranscript.map { it?.transcript ?: "textなし" }.joinToString("")
 //            val chainText = "どんな画像ですか？"
             println(chainText)
