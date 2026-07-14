@@ -50,6 +50,6 @@ class DocumentController(
     }
     @GetMapping("/documents/{lecture_id}")
     fun getDocumentById(@PathVariable("lecture_id") lecture_id: Long): Document? {
-        return documentRepository.findByIdOrNull(lecture_id)
+        return documentRepository.findByLectureId(lecture_id)
     }
 }
