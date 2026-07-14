@@ -49,7 +49,7 @@ class  InsightControler(
     }
     @GetMapping("/insights/status/{lecture_id}")
     fun getInsightStatus(@PathVariable("lecture_id") lecture_id: Long,):List<Insight?>{
-        return insightService.getInsightById(lecture_id)
+        return insightRepository.findByAllByLectureId(lecture_id)
     }
 
     @PostMapping("/insights")
@@ -72,6 +72,7 @@ class  InsightControler(
 
         val reactionCount = savedReaction.size.toDouble()
         val studentCount = savedStudent.size.toDouble()
+//        val ratekun: Double = reactionCount / studentCount
         val ratekun: Double = reactionCount / studentCount
 //transcriptから今のページのimgを取ってくるアル
         if (ratekun > 30.0) {
