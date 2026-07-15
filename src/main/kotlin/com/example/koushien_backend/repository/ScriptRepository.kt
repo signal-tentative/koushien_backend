@@ -2,8 +2,16 @@ package com.example.koushien_backend.repository
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 import com.example.koushien_backend.model.Script
+import org.springframework.data.jpa.repository.Query
+import org.springframework.data.repository.query.Param
 
 @Repository
 interface ScriptRepository : JpaRepository<Script, String> {
-    fun findAllById(ids: Long): kotlin.collections.List<com.example.koushien_backend.model.Script?>
+    @Query(
+        value = """SELECT * FROM script WHERE documentId = :documentId ;""",
+        nativeQuery = true
+    )
+    fun findAllById(
+        @Param("documentId") documentId: Long,
+    ): kotlin.collections.List<com.example.koushien_backend.model.Script?>
 }
