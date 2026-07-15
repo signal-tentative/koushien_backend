@@ -8,10 +8,10 @@ import org.springframework.data.repository.query.Param
 @Repository
 interface ScriptRepository : JpaRepository<Script, String> {
     @Query(
-        value = """SELECT * FROM script WHERE documentId = :documentId ;""",
+        value = """SELECT * FROM script WHERE document_id = :document_id ;""",
         nativeQuery = true
     )
     fun findAllById(
-        @Param("documentId") documentId: Long,
+        @Param("documentId") document_id: Long,
     ): kotlin.collections.List<com.example.koushien_backend.model.Script?>
 }
