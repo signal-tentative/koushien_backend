@@ -76,7 +76,7 @@ class  InsightControler(
         val ratekun: Double = reactionCount / 10*100
         println(reactionCount)
 //transcriptから今のページのimgを取ってくるアル
-        if (ratekun > 0.0) {
+        if (ratekun >= 0.0) {
             println(lecture_id)
             println(time)
             val savedTranscript: List<Transcript?> =
