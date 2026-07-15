@@ -29,8 +29,8 @@ class ScriptControler(val scriptService: ScriptService,val scriptRepository: Scr
     fun getScripts():List<Script?>{
         return scriptService.getScripts()
     }
-    @GetMapping("/scripts/{documentId}")
-    fun getScriptDocumentId(@PathVariable(value = "documentId") documentId: Long): List<Script?> {
+    @GetMapping("/scripts/{document_id}")
+    fun getScriptDocumentId(@PathVariable(value = "document_id") documentId: Long): List<Script?> {
         return scriptRepository.findAllById(documentId)
     }
     @PostMapping("/scripts")
