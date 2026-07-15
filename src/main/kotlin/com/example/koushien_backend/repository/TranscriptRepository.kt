@@ -19,5 +19,6 @@ interface TranscriptRepository: JpaRepository<Transcript, Long>{
         @Param("lecture_id") lecture_id: Long,
         @Param("time") time: LocalDateTime,
     ): kotlin.collections.List<Transcript?>
+
 }
 
