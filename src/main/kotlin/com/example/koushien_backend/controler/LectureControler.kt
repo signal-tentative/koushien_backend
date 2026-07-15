@@ -72,8 +72,10 @@ class LectureController(
         @RequestParam("endDate") endDate: LocalDateTime,
         @RequestParam("uid") uid: String): ResponseEntity<Lecture> {
 
-        val patchLecture = lectureRepository.findLectureByCode(code)
+        val patchLecture = lectureRepository.findLectureByCode(code.toString())
         ?: return ResponseEntity.status(HttpStatus.BAD_REQUEST).build()
+
+        println(patchLecture)
 
         val updatedLecture = patchLecture.copy(
             code = code,
