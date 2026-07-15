@@ -12,6 +12,6 @@ interface ScriptRepository : JpaRepository<Script, String> {
         nativeQuery = true
     )
     fun findAllById(
-        @Param("documentId") document_id: Long,
+        @Param("document_id") document_id: Long,
     ): kotlin.collections.List<com.example.koushien_backend.model.Script?>
 }
