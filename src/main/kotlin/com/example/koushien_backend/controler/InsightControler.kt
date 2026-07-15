@@ -66,14 +66,15 @@ class  InsightControler(
 //        val savedInsight =
 //            insightRepository.findByIdOrNull(insight_id) ?: return ResponseEntity.status(HttpStatus.BAD_REQUEST).build()
         val savedReaction =
-            reactionRepository.findAllById(lecture_id) ?: return ResponseEntity.status(HttpStatus.BAD_REQUEST).build()
+            reactionRepository.findAllById(lecture_id,time)?: return ResponseEntity.status(HttpStatus.BAD_REQUEST).build()
         val savedStudent =
             studentRepository.findAllById(lecture_id) ?: return ResponseEntity.status(HttpStatus.BAD_REQUEST).build()
 
         val reactionCount = savedReaction.size.toDouble()
         val studentCount = savedStudent.size.toDouble()
 //        val ratekun: Double = reactionCount / studentCount
-        val ratekun: Double = reactionCount / studentCount
+        val ratekun: Double = reactionCount / 10*100
+        println(reactionCount)
 //transcriptから今のページのimgを取ってくるアル
         if (ratekun > 0.0) {
             println(lecture_id)
