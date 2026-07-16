@@ -12,7 +12,7 @@ interface TranscriptRepository: JpaRepository<Transcript, Long>{
 //    fun findAllById(id: Long): kotlin.collections.List<com.example.koushien_backend.model.Transcript?>
 
     @Query(
-        value = """SELECT * FROM transcripts WHERE lecture_id = :lecture_id AND time >= CAST(:time AS timestamp)- INTERVAL '40 seconds';""",
+        value = """SELECT * FROM transcripts WHERE lecture_id = :lecture_id AND time >= CAST(:time AS timestamp)- INTERVAL '30 seconds';""",
         nativeQuery = true
     )
     fun findByTimeTrump(
